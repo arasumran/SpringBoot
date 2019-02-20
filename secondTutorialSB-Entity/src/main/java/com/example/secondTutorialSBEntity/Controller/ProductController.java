@@ -44,18 +44,13 @@ public class ProductController {
     public Product updateProduct(@RequestBody Product productToUpdate, @PathVariable(name = "id") Integer id)
 
     {
+        //after that if nullpointer Exception comes  it will handle for ProductAdvicer
         Optional<Product> findProduct = iproductRepository.findById(id);
-
-        if (findProduct != null) {
             findProduct.get().setCategory(productToUpdate.getCategory());
             findProduct.get().setDescription(productToUpdate.getDescription());
             findProduct.get().setPrice(productToUpdate.getPrice());
             findProduct.get().setName(productToUpdate.getName());
             return iproductRepository.save(findProduct.get());
-        } else {
-            log.info("There is no matching products");
-            return productToUpdate;
-        }
     }
 
     @RequestMapping(path = "id", method = RequestMethod.DELETE)
